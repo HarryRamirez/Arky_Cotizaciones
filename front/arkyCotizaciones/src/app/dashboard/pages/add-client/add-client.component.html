@@ -1,0 +1,53 @@
+<div class=" cont_client container-md">
+
+    <div class="title text-center mb-3">
+        <h4>Clientes</h4>
+    </div>
+
+    <section class="button d-flex row">
+        <div class="col-sm-6 ">
+        <button type="button" class="btn btn-primary" routerLink="/dashboard/client" (click)="navigateAndRefresh()">Consultar Cliente</button>
+        </div>
+
+    </section>
+
+    <section class="container-md bg-body-tertiary">
+       <form action="" (ngSubmit)="saveClient()">
+       <div class=" form d-flex ">
+        <div class="cont">
+            <label for="input" class="form-label">Cliente:</label>
+            <input id="name" name="name" [(ngModel)]="selectedClient.name"  class="form-control mb-2" type="text"  aria-label="default input example" required>
+            <label for="input" class="form-label">Rut:</label>
+            <input id="rut" name="rut" [(ngModel)]="selectedClient.rut"  class="form-control mb-2" type="text" aria-label="default input example" required>
+            <label for="input" class="form-label">Rubro:</label>
+            <input id="rubro" name="rubro" [(ngModel)]="selectedClient.rubro" class="form-control" type="text"  aria-label="default input example" required>
+        </div>
+
+        <div class="cont">
+            <label for="input" class="form-label">Correo:</label>
+            <input id="email" name="email" [(ngModel)]="selectedClient.email" class="form-control mb-2" type="email"  aria-label="default input example" required>
+            <label for="input" class="form-label">Telefono:</label>
+            <input id="phone" name="phone" [(ngModel)]="selectedClient.phone" class="form-control mb-2" type="text" aria-label="default input example" required>
+            <label for="input" class="form-label">Direccion:</label>
+            <input id="addres" name="address" [(ngModel)]="selectedClient.address" class="form-control" type="text"  aria-label="default input example" required>
+        </div>
+
+    </div>
+
+        <div class=" cont_btn mt-3 me-3 pb-3 d-flex">
+            <button type="submit" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#staticBackdrop">Ingresar</button>
+          </div>
+      </form>
+
+      <div class="modal modal-sm fade" id="staticBackdrop" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal_delete modal-body text-center">
+              <img class="alert" src="../../../../assets/icons/success.svg" alt="">
+              <h1 class="modal-title fs-3 mb-1" id="staticBackdropLabel">!Guardado con Exito!</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</div>

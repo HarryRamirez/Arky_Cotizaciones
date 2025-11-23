@@ -1,0 +1,138 @@
+
+.cont_select{
+    justify-content: space-around;
+    margin-top: 170px;
+    margin-bottom: 70px;
+    select{
+        width: 40%;
+    }
+}
+
+
+
+.acept{
+    box-shadow: 1px 1px 5px -2px gray;
+    background-color: white;
+    height: 165px;
+    .color1{
+        height: 27px;
+        margin-top: -29px;
+        background-color: #1a8754;
+        border-radius: 5px  5px 0px 0px;
+
+    }
+}
+.pend{
+    box-shadow: 1px 1px 5px -2px gray;
+    background-color: white;
+    height: 165px;
+    .color2{
+        height: 27px;
+        margin-top: -29px;
+        background-color: #ffc108;
+        border-radius: 5px  5px 0px 0px;
+    }
+}
+.rech{
+    box-shadow: 1px 1px 5px -2px gray;
+    background-color: white;
+    height: 165px;
+    .color3{
+        height: 27px;
+        margin-top: -29px;
+        background-color: #db3545;
+        border-radius: 5px  5px 0px 0px;
+    }
+}
+
+.cont_estado div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 250px;
+    height: 150px;
+    margin-bottom: 25px;
+    border-radius: 5px;
+
+ 
+}
+
+.cont_estado{
+    
+    margin-top: 105px;
+    justify-content: space-between;
+
+    h4{
+        color: rgb(37, 37, 37);
+    }
+    h2{
+        color: rgb(37, 37, 37);
+        font-size: 30px;
+    }
+}
+
+
+
+
+section{
+    margin-top: 200px;
+}
+canvas {
+    width: 60%;
+    margin: auto;
+  }
+
+  .cont_chart2{
+    margin-top: 190px;
+  }
+
+
+  @media(max-width: 796px){
+    .cont_estado{
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+
+        div{
+            margin-left: 31%;
+            width: 300px;
+            margin-bottom: 20px;
+        }
+    }
+
+  }
+
+
+
+
+
+
+
+
+
+
+  .custom-date-input {
+    font-family: 'Arial', sans-serif;
+    border: 2px solid #4CAF50; /* Bordes de color verde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px; /* Espacio dentro del input */
+    font-size: 16px; /* Tamaño de la fuente */
+    color: #555; /* Color del texto */
+    background-color: #f9f9f9; /* Fondo claro */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el input */
+    outline: none; /* Elimina el borde de enfoque predeterminado */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Suaviza las transiciones */
+  }
+  
+  .custom-date-input:focus {
+    border-color: #45a049; /* Cambia el color del borde al enfocarse */
+    box-shadow: 0 0 8px rgba(0, 128, 0, 0.5); /* Agrega un efecto de sombra */
+  }
+  
+  .custom-date-input::-webkit-calendar-picker-indicator {
+    background-color: #45a049; /* Cambia el color del ícono del calendario */
+    padding: 5px;
+    border-radius: 50%;
+  }
+  

@@ -1,0 +1,30 @@
+
+.invoice-header {
+    padding: 20px 0;
+    border-bottom: 2px solid #ddd;
+  }
+  
+  .invoice-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .company-info {
+    text-align: right;
+  }
+  
+  .table-invoice td,
+  .table-invoice th {
+    vertical-align: middle;
+  }
+  
+  .total-row {
+    font-weight: bold;
+    font-size: 18px;
+  }
+  
+  .footer-info {
+    padding: 20px 0;
+    text-align: center;
+    border-top: 2px solid #ddd;
+  }

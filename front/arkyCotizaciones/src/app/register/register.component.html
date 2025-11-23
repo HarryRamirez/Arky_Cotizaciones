@@ -1,0 +1,86 @@
+<section class="container-fluid">
+  <div class="logo mb-4 text-center">
+    <img src="../../assets/imgs/logo_arky.png" alt="" />
+  </div>
+
+  <div class="row justify-content-center">
+    <form id="form" class="col-md-4 form" action="" [formGroup]="registerForm" (ngSubmit)="register()">
+      <label for="nombre" class="form-label">Nombre(s):</label>
+      <div class="cont_input mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Ej: Juan"
+          id="firstname" formControlName="firstname" name="firstname"
+        />
+        <div class="cont_img">
+          <img src="../../assets/icons/log_usuario.svg" alt="" class="img-fluid" />
+        </div>
+      </div>
+
+      <label for="apellido" class="form-label">Apellido(s):</label>
+      <div class="cont_input mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Ej: Pérez Gómez"
+          id="lastname" formControlName="lastname" name="lastname"
+        />
+        <div class="input-group-append">
+          <img src="../../assets/icons/log_usuario.svg" alt="" class="img-fluid" />
+        </div>
+      </div>
+
+      <label for="correo" class="form-label">Correo:</label>
+      <div class="cont_input mb-3">
+        <input
+          type="email"
+          class="form-control"
+          placeholder="correo@ejemplo.com"
+          id="email" formControlName="email" name="email"
+        />
+        <div class="input-group-append">
+          <img src="../../assets/icons/correo.svg" alt="" class="img-fluid" />
+        </div>
+      </div>
+
+      <label for="contrasena" class="form-label">Contraseña:</label>
+      <div class="cont_input mb-3">
+        <input
+          type="{{ passwordVisible ? 'text' : 'password' }}"
+          class="form-control"
+          placeholder="•••••••••••••••••"
+          id="password" formControlName="password" name="password"
+        />
+        <i  (click)="togglePasswordVisibility()">
+          <img [src]="passwordVisible ? '../../assets/icons/eye-open.svg' : '../../assets/icons/eye-close.svg'" alt="">
+        </i>
+        <div class="input-group-append">
+          <img src="../../assets/icons/contraseña.svg" alt="" class="img-fluid" />
+        </div>
+      </div>
+
+      <div class="rol mb-3 select">
+        <label class="" id="basic-addon1">Rol:</label>
+        <select id="role" formControlName="role" name="role" class="form-select mb-3 form-select-sm" aria-label="">
+          <option [value]="2">ASSESOR</option>
+          <option [value]="3">COORDINADOR</option>
+        </select>
+      </div>
+
+      <div class="cont_btn text-center">
+        <button id="" type="submit" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn"><a >Ingresar</a></button>
+      </div>
+    </form>
+    <div class="modal modal-sm fade" id="staticBackdrop" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal_success modal-body text-center">
+            <img class="alert" src="../../../../assets/icons/success.svg" alt="">
+            <h1 class="modal-title fs-3 mb-1" id="staticBackdropLabel">!Registrado con Exito!</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

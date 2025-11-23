@@ -1,0 +1,54 @@
+<div class=" cont_service container-md">
+
+    <div class="title text-center mb-3">
+        <h4>Servicios/Productos</h4>
+    </div>
+
+    <section class="button d-flex row">
+        <div class="col-sm-6 ">
+        <button type="button" class="btn btn-primary" routerLink="/dashboard/service" (click)="navigateAndRefresh()">Consultar Servicio</button>
+        </div>
+
+    </section>
+
+    <section class="container-md bg-body-tertiary">
+       <form action="" [formGroup]="serviceForm" (ngSubmit)="saveService()">
+       <div class=" form d-flex ">
+        <div class="cont">
+            <label for="input" class="form-label">Tipo:</label>
+            <select id="categoryId" formControlName="categoryId" class="form-select" aria-label="Default select example">
+                @for(category of categories; track category){
+                <option [value] ="category.categoryId">{{category.name }}</option>
+                }
+              </select>
+            <label for="input" class="form-label">Neto:</label>
+            <input id="net" formControlName="net" class="form-control" type="text" aria-label="default input example">
+        </div>
+
+        <div class="cont">
+            <label for="input" class="form-label">Nombre:</label>
+            <input id="name" formControlName="name" class="form-control mb-2" type="text"  aria-label="default input example">
+            <label for="exampleFormControlTextarea1" class="form-label">Descripcion:</label>
+            <textarea id="description" formControlName="description" class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+        </div>
+
+    </div>
+
+        <div class=" cont_btn mt-3 me-3 pb-3 d-flex">
+            <button type="submit" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#staticBackdrop" [disabled]="!serviceForm.valid">Ingresar</button>
+          </div>
+      </form>
+
+      <div class="modal modal-sm fade" id="staticBackdrop" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal_success modal-body text-center">
+              <img class="alert" src="../../../../assets/icons/success.svg" alt="">
+              <h1 class="modal-title fs-3 mb-1" id="staticBackdropLabel">!Guardado con Exito!</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</div>
+

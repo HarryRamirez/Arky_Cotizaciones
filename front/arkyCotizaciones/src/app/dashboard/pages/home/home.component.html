@@ -1,0 +1,53 @@
+
+<div class="cont_select container-fluid d-flex">
+    <select class="form-select">
+      <option value="1">2012</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+    </select>
+    <select class="form-select">
+      <option value="1">Marzo</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+    </select>
+  </div>
+
+
+
+  <div class=" cont_estado  container-lg d-flex mt-10">
+    <div class="acept">
+      <div class="color1 d"></div>
+      <h4>Aceptadas</h4>
+      <h2>{{ acceptedCount }}</h2>
+    </div>
+    <div class="pend ">
+      <div class="color2 d"></div>
+      <h4>Pendientes</h4>
+      <h2>{{ pendingCount }}</h2>
+    </div>
+    <div class="rech ">
+      <div class="color3 d"></div>
+      <h4>Rechazadas</h4>
+      <h2>{{ rejectedCount }}</h2>
+    </div>
+  </div>
+
+
+
+
+  <section class="container-fluid text-center">
+    <h2 class="mb-5">Estadistica del Estado Cotizaciones</h2>
+  
+      <div>
+        <canvas id="chart1"></canvas>
+      </div>
+      
+      <div class="cont_chart2">
+        <canvas id="chart2"></canvas>
+      </div>
+      
+    
+  </section>
+
+
+

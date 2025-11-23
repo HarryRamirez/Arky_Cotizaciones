@@ -1,0 +1,46 @@
+<section class="container-fluid">
+    <div class="logo mb-4 text-center">
+        <img src="../../assets/imgs/logo_arky.png" alt="" />
+      </div>
+
+      <div class="cont_form d-flex ">
+        <form class="form " action="" [formGroup]="loginForm" (ngSubmit)="login()">
+            <label for="correo" class="form-label">Correo:</label>
+            <div class="cont_input mb-3">
+              <input
+                type="email"
+                class="form-control"
+                placeholder="correo@ejemplo.com"
+                id="email" name="email" formControlName="email"
+              />
+              <div class="input-group-append">
+                <img src="../../assets/icons/correo.svg" alt="" class="img-fluid" />
+              </div>
+            </div>
+
+            <label for="contrasena" class="form-label">Contraseña:</label>
+            <div class="cont_input mb-3">
+              <input
+                type="{{ passwordVisible ? 'text' : 'password' }}"
+                class="form-control"
+                placeholder="•••••••••••••••••"
+                id="password" name="password" formControlName="password"
+              />
+              <i (click)="togglePasswordVisibility()">
+                <img [src]="passwordVisible ? '../../assets/icons/eye-open.svg' : '../../assets/icons/eye-close.svg'" alt="">
+              </i>
+
+              <div class="input-group-append">
+                <img src="../../assets/icons/contraseña.svg" alt="" class="img-fluid" />
+              </div>
+            </div>
+
+            <a routerLink="/register">Registrarse</a>
+
+            <div class="cont_btn text-center">
+                <button id="" type="submit" class="btn"><a>Ingresar</a></button>
+              </div>
+        </form>
+
+      </div>
+</section>

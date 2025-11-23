@@ -1,0 +1,55 @@
+### Java ###
+*.class
+*.log
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+### Gradle ###
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+
+### IntelliJ IDEA ###
+*.iml
+*.ipr
+*.iws
+.idea/
+
+### Eclipse ###
+.project
+.classpath
+.settings/
+bin/
+
+### VS Code ###
+.vscode/
+
+### OS Files ###
+.DS_Store
+Thumbs.db
+
+### Spring Boot ###
+# Archivos de configuración sensibles
+src/main/resources/application.properties
+src/main/resources/application.yml
+src/main/resources/application.yaml
+
+# Archivos que suelen usarse como ejemplo (si existen)
+!src/main/resources/application-example.properties
+!src/main/resources/application-example.yml
+!src/main/resources/application-example.yaml
+

@@ -1,0 +1,156 @@
+<div class=" cont_client container-md">
+
+  <div class="title text-center mb-5">
+    <h4>Clientes</h4>
+</div>
+<section class="button d-flex row">
+    <div class="col-sm-6">
+    <button type="button" class="btn btn-primary me-3" routerLink="/dashboard/add-client" >Ingresar Cliente</button>
+    <button type="button" class="btn btn-primary" (click)="ExcelReport()">Reporte</button>
+    </div>
+    <form class="d-flex col-sm-6" (submit)="onSubmit($event)"  role="search">
+        <input [(ngModel)]="searchTerm" name="name" class="form-control me-2" type="search" nplaceholder="Buscar" aria-label="Search">
+        <button class="btn btn-outline-primary" type="submit">Buscar</button>
+    </form>
+</section>
+
+<section class="container-md bg-body-tertiary">
+<br>
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+              <th scope="col">Cliente</th>
+              <th scope="col">Telefono</th>
+              <th scope="col">Correo</th>
+              <th scope="col">Direccion</th>
+              <th scope="col">Accion</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            
+                <!-- Spinner en el centro de la pantalla -->
+                @if(loadingReport){
+                  <div id="loading-spinner" class="spinner-overlay" >
+                    <div class="spinner-container">
+                      <p>Obteniendo Reporte</p>
+                      <div class="spinner-border text-dark" role="status">
+                        <span class="sr-only"></span>
+                      </div>
+                     
+                    </div>
+                  </div>
+                }
+            
+
+            @for (client of clients | paginate: { itemsPerPage: itemsPerPage, currentPage: page }; track client) {
+            <tr>
+              <td>{{client.name}}</td> 
+              <td>{{client.phone}}</td>
+              <td>{{client.email}}</td>
+              <td>{{client.address}}</td>
+              <td>
+                <div class="accion">
+
+                    <a class="look bg-primary" data-bs-toggle="modal" data-bs-target="#look_client" href="" (click)="getClientById(client.customerId)"><img src="../../../../assets/icons/eye.svg" alt=""></a>
+                    <div class="modal fade" id="look_client" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-3" id="staticBackdropLabel">Cliente</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal_look modal-body text-center">
+                            @if(selectedClient){
+                            <h1 class="modal-title fs-4" id="staticBackdropLabel">{{selectedClient.name}}</h1>
+                            <h5 class="modal-title "><span >Rut: </span>{{selectedClient.rut}}</h5>
+                            <h5 class="modal-title "><span>Telefono: </span>{{selectedClient.phone}}</h5>
+                            <h5 class="modal-title "><span>Correo: </span>{{selectedClient.email}}</h5>
+                            <h5 class="modal-title"><span>Rubro: </span>{{selectedClient.rubro}}</h5>
+                            <h5 class="modal-title"><span>Direccion: </span>{{selectedClient.address}}</h5>
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <a class="edit bg-warning" data-bs-toggle="modal" data-bs-target="#update_client" href="" (click)="editClient(client)"><img src="../../../../assets/icons/edit.svg" alt=""></a>
+                    <div class="modal fade" id="update_client" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-3" id="staticBackdropLabel">Cliente</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+
+                          <div class="modal_update modal-body">
+                            <form action="" class="d-flex " [formGroup]="selectedClientForm" >
+                              <div class="cont">
+                                  <label for="input" class="form-label">Cliente:</label>
+                                  <input id="name" formControlName="name" class="form-control mb-2" type="text"  aria-label="default input example">
+                                  <label for="input" class="form-label">Rut:</label>
+                                  <input id="rut" formControlName="rut" class="form-control mb-2" type="text" aria-label="default input example">
+                                  <label for="input" class="form-label">Rubro:</label>
+                                  <input id="rubro" formControlName="rubro" class="form-control" type="text"  aria-label="default input example">
+                              </div>
+                      
+                              <div class="cont">
+                                  <label for="input" class="form-label">Correo:</label>
+                                  <input id="email" formControlName="email"  class="form-control mb-2" type="email"  aria-label="default input example">
+                                  <label for="input" class="form-label">Telefono:</label>
+                                  <input id="phone" formControlName="phone"  class="form-control mb-2" type="text" aria-label="default input example">
+                                  <label for="input" class="form-label">Direccion:</label>
+                                  <input id="address" formControlName="address" name="address" class="form-control" type="text"  aria-label="default input example">
+                              </div>
+                            </form>
+
+                            <div class=" cont_btn mt-3 me-3 pb-3 mt-5 d-flex ">
+                              <button type="submit" class="btn btn-primary " data-bs-dismiss="modal" (click)="updateClient()" >Actualizar</button>
+                            </div>
+
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <a class="delete bg-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" href="" (click)="openDeleteModal(client.customerId)"><img src="../../../../assets/icons/delete.svg" alt=""></a>
+                    <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal_delete modal-body text-center">
+                            <img class="alert" src="../../../../assets/icons/alert.svg" alt="">
+                            <h1 class="modal-title fs-3 mb-1" id="staticBackdropLabel">¿Estas seguro?</h1>
+                            <h6 class="modal-title fs-8 mb-4">!No podras deshacer cambios!</h6>
+                            <div class="mb-5">
+                              <button type="button" class="btn btn-danger me-4" data-bs-dismiss="modal"  (click)="deleteClient()">Si, borrarlo!</button>
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Cancelar</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                </div>
+              </td>
+            </tr>
+          }
+          </tbody>
+      </table>
+      @if(loading){
+      <div  class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      }
+      <section class="pagi mt-4 d-flex">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <pagination-controls (pageChange)="page = $event" class="justify-content-center"></pagination-controls>
+            </ul>
+          </nav>
+      </section>
+</section>
+</div>

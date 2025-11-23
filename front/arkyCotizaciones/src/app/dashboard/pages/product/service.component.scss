@@ -1,0 +1,74 @@
+.cont_client{
+    margin-top: 145px;
+}
+
+
+.button{
+    margin-bottom: 20px;
+    justify-content: space-between;
+}
+
+
+.estate{
+    justify-content: center;
+
+    input{
+        width: 55px;
+        height: 25px;
+    }
+}
+
+
+
+.accion{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 4px;
+    a{
+        width: 25px;
+        text-align: center;
+        border-radius: 3px;
+    }
+    img{
+        margin-bottom: 4px;
+    }
+}
+
+
+
+.pagi{
+    justify-content: end;
+}
+
+
+
+.modal_look{
+    margin-bottom: 5px;
+}
+
+
+
+.modal_delete{
+
+    img{
+        width: 100px;
+    }
+    .button{
+        color: #fff;
+    }
+}
+
+
+
+.modal_update .form {
+      justify-content: space-between;
+}
+
+
+.form .cont{
+    width: 45%;
+}
+
+.cont_btn{
+    justify-content: end;
+}

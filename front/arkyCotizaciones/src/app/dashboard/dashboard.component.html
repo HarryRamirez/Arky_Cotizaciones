@@ -1,0 +1,77 @@
+<div class="dashboard">
+<section class="cont container-fluid d-flex ">
+
+        <img class="logo" src="../../assets/imgs/navbar_logo.png" alt="">
+
+    <div class="cont_user   d-flex">
+        <div class="user d-flex">
+            <img src="../../assets/icons/avatar.svg" alt="">
+            <a href="">{{firstName}} {{lastName}}</a>
+        </div>
+        <img  src="../../assets/icons/notification.svg" alt="">
+        <img (click)="logout()" src="../../assets/icons/exit.svg" alt="">
+    </div>
+</section>
+
+
+<section >
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <img src="../../assets/icons/home.svg" alt="">
+                <a class="nav-link active" aria-current="page" routerLink="/dashboard/home">Hogar</a>
+              </li>
+              <li class="nav-item">
+                <img src="../../assets/icons/clients.svg" alt="">
+                <a class="nav-link" routerLink="/dashboard/client">Clientes</a>
+              </li>
+              <li class="nav-item">
+                <img src="../../assets/icons/services.svg" alt="">
+                <a class="nav-link" routerLink="/dashboard/service">Servicios/Productos</a>
+              </li>
+              <li class="nav-item">
+                <img src="../../assets/icons/quotation.svg" alt="">
+                <a class="nav-link" routerLink="/dashboard/quotation">Cotizaciones</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+</section>
+</div>
+
+<router-outlet></router-outlet>
+
+
+<footer>
+  <div class="cont_footer d-flex">
+    <div class="img_footer d-flex">
+      <img src="../../assets/imgs/logo_footer.png" alt="">
+    </div>
+
+    <div class="mt-2">
+      <h5>SOBRE NOSOTROS</h5>
+      <p>En ARKY, ofrecemos un sistema ágil y fácil de usar para generar 
+        cotizaciones personalizadas, ayudando a las empresas a ahorrar tiempo y mejorar su 
+        eficiencia operativa. </p>
+    </div>
+
+    <div class="mt-2 ms-5">
+      <h5 class="mb-3">SIGUENOS</h5>
+      <div class="logo_footer d-flex text-center">
+        <a href=""> <img src="../../assets/icons/facebook.svg" alt=""></a>
+        <a href=""><img src="../../assets/icons/instagram.svg" alt=""></a>
+        <a href=""><img src="../../assets/icons/twitter-x.svg" alt=""></a>
+        <a href=""><img src="../../assets/icons/youtube.svg" alt=""></a>    
+      </div>
+    </div>
+  </div>
+</footer>
+<div class="datos d-flex">
+  <p class="text-center">&copy; 2024 ARKY Cotizaciones - Todos Los derechos Reservados</p>
+</div>

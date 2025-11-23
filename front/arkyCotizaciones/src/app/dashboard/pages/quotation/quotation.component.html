@@ -1,0 +1,406 @@
+<div class=" cont_quotation container-fluid">
+    <div class="title text-center mb-5">
+        <h4>Cotizaciones</h4>
+    </div>
+
+    <section class="button d-flex row">
+        <div class="col-sm-6">
+        <button type="button" class="btn btn-primary" routerLink="/dashboard/add-quotation" >Ingresar Cotizacion</button>
+        </div>
+        <form class="d-flex col-sm-6" (submit)="onSubmit($event)" role="search">
+            <input [(ngModel)]="searchTerm" name="name" class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+            <button class="btn btn-outline-primary" type="submit">Buscar</button>
+        </form>
+    </section>
+    
+    <section class="container-fluid bg-body-tertiary">
+        <br>
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                  <th scope="col">N°</th>
+                  <th scope="col">Cliente</th>
+                  <th scope="col">Emision</th>
+                  <th scope="col">Evento</th>
+                  <th scope="col">Neto</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Remitente</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Accion</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Spinner en el centro de la pantalla -->
+                 @if(loadingPdf){
+                <div id="loading-spinner" class="spinner-overlay" >
+                  <div class="spinner-container">
+                    <p>Preparando Descarga</p>
+                    <div class="spinner-border text-dark" role="status">
+                      <span class="sr-only"></span>
+                    </div>
+                   
+                  </div>
+                </div>
+              }
+                
+                @for(quotation of quotations | paginate: { itemsPerPage: itemsPerPage, currentPage: page }; track quotation.quotationId){
+                <tr>
+                    <td>{{quotation.quotationId}}</td>
+                    <td>{{quotation.customer}}</td>
+                    <td>{{quotation.dateQuotation}}</td>
+                    <td>{{quotation.dateEvent}}</td>
+                    <td>{{quotation.net}}</td>
+                    <td>{{quotation.total}}</td>
+                    <td>{{quotation.remitter}}</td>
+                    <td>
+                        <select #quotationSelect  class="form-select " aria-label="Default select example" 
+                        [(ngModel)]="quotation.state.stateId" 
+                        (ngModelChange)="updateQuotationState(quotation, $event, quotationSelect)"
+                        [ngClass]="{
+                          'color-1': quotation.state?.stateId === 1,
+                          'color-2': quotation.state?.stateId === 2,
+                          'color-3': quotation.state?.stateId === 3
+                        }">
+                          @for(state of states; track state.stateId){  
+                          <option  [value]="state.stateId">{{state.name}}</option>
+                          }
+                          </select>
+                    </td>
+                    <td>
+                        <div class="accion">
+
+                            <a class="look bg-primary" data-bs-toggle="modal" data-bs-target="#look_client" href="" (click)="getQuotationById(quotation.quotationId)"><img src="../../../../assets/icons/eye.svg" alt=""></a>
+                            <div class="modal fade modal-xl " id="look_client" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-3" id="staticBackdropLabel">Cotizacion</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal_look modal-body">
+                                    @if(selectedQuotation){
+                                    <div class="container my-4">
+                                      <div class="row invoice-header">
+                                    
+                                        <div class="col-6">
+                                          <img src="../../../../assets/imgs/logo_arky.png" alt="Logo Empresa" style="max-height: 60px;">
+                                          <p class="mt-2">
+                                            NIT: 1234567890<br>
+                                            Dirección: Calle 123 #45-67, Bogota<br>
+                                            Teléfono: (123) 456-7890<br>
+                                            Email: arkygmail.com.co
+                                          </p>
+                                        </div>
+                                    
+                                        <div class="col-6 company-info">
+                                          <h2 class="invoice-title">COTIZACIÓN</h2>
+                                          <p>
+                                            <strong>Número de Cotización:</strong> {{selectedQuotation.quotationId}}<br>
+                                            <strong>Fecha:</strong> {{selectedQuotation.dateQuotation}}<br>
+                                            <strong>Válida hasta:</strong> {{selectedQuotation.dateEvent}}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    
+                                    
+                                      <div class="row mt-4">
+                                        <div class="col-6">
+                                          <h5>Datos del Cliente</h5>
+                                          <p>
+                                            <strong>Nombre:</strong> {{selectedQuotation.customer.name}}<br>
+                                            <strong>Email:</strong> {{selectedQuotation.customer.email}}<br>
+                                            <strong>Teléfono:</strong> {{selectedQuotation.customer.phone}}<br>
+                                            <strong>Dirección:</strong> {{selectedQuotation.customer.address}}
+                                          </p>
+                                        </div>
+                                    
+                                        <div class="col-6 company-info">
+                                          <h5>Remitente</h5>
+                                          <p>
+                                            <strong>Nombre:</strong> {{selectedQuotation.remitter}}<br>
+                                            <strong>usuario:</strong> {{selectedQuotation.user.firstname}} {{selectedQuotation.user.lastname}}<br>
+                                            <strong>Email:</strong> {{selectedQuotation.user.email}}<br>
+                                          </p>
+                                        </div>
+
+                                        
+                                      </div>
+                                    
+                                    
+                                      <div class="table-responsive mt-4">
+                                        <table class="table table-bordered table-invoice">
+                                          <thead class="table-dark">
+                                            <tr>
+                                              <th>Servicio</th>
+                                              <th>Descripción</th>
+                                              <th>Cantidad</th>
+                                              <th>Valor Unitario</th>
+                                              <th>Valor Total</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            @for(item of selectedQuotation.items; track item){
+                                            <tr>
+                                              <td>{{ item.product}}</td>
+                                              <td>{{ item.description}}</td>
+                                              <td>{{ item.quantity}}</td>
+                                              <td>{{ item.valueUnit}}</td>
+                                              <td>{{ item.valueTotal}}</td>
+                                            </tr>
+                                          }
+                                    
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    
+                                    
+                                      <div class="row">
+                                        <div class="col-6"></div>
+                                        <div class="col-6">
+                                          <table class="table table-bordered">
+                                            <tbody>
+                                              <tr>
+                                                <td>Subtotal</td>
+                                                <td>{{selectedQuotation.net}}</td>
+                                              </tr>
+                                              <tr>
+                                                <td>IVA</td>
+                                                <td>{{selectedQuotation.iva}}</td>
+                                              </tr>
+                                              <tr>
+                                                <td>Descuento</td>
+                                                <td>{{selectedQuotation.discount.percentage}}%</td>
+                                              </tr>
+                                              <tr class="total-row">
+                                                <td>Total</td>
+                                                <td>{{selectedQuotation.total}}</td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+                                    
+                                    
+                                      <div class="footer-info">
+                                        <p>
+                                          <strong>Condiciones de Pago:</strong> Pago a 30 días desde la fecha de emisión.<br>
+                                          <strong>Métodos de Pago:</strong> Transferencia bancaria, PayPal.
+                                        </p>
+                                        <p>
+                                          <strong>Observaciones:</strong> Esta cotización es válida hasta la fecha indicada y está sujeta a cambios sin previo aviso.
+                                        </p>
+                                      </div>
+                                    </div>
+                                  }
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          
+
+
+                            <a class="look bg-success" data-bs-toggle="modal" data-bs-target="static" href="" (click)="getAndDownloadPDF(quotation.quotationId)"><img src="../../../../assets/icons/pdf.svg" alt=""></a>
+                            @if(selectedQuotation){
+                            
+                              <div class="modal fade modal-xl " style="display: none;" id="look_pdf" data-bs-backdrop="static"  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" >
+                                  <div class="modal-content" id="template-pdf">
+                                    <div class="modal_look modal-body ">
+                                      <div class="container " >
+                                        <div class="row invoice-header info">
+                                      
+                                          <div class="col-6">
+                                            <img src="../../../../assets/imgs/logo_arky.png" alt="Logo Empresa" style="max-height: 60px;">
+                                            <p class="mt-2">
+                                              NIT: 1234567890<br>
+                                              Dirección: Calle 123 #45-67, Bogota<br>
+                                              Teléfono: (123) 456-7890<br>
+                                              Email: arkygmail.com.co
+                                            </p>
+                                          </div>
+                                      
+                                          <div class="col-6 company-info">
+                                            <h2 class="invoice-title">COTIZACIÓN</h2>
+                                            <p>
+                                              <strong>Número de Cotización:</strong> {{selectedQuotation.quotationId}}<br>
+                                              <strong>Fecha:</strong> {{selectedQuotation.dateQuotation}}<br>
+                                              <strong>Válida hasta:</strong> {{selectedQuotation.dateEvent}}
+                                            </p>
+                                          </div>
+                                        </div>
+                                      
+                                      
+                                        <div class="row mt-4">
+                                          <div class="col-6">
+                                            <h5>Datos del Cliente</h5>
+                                            <p>
+                                              <strong>Nombre:</strong> {{selectedQuotation.customer.name}}<br>
+                                              <strong>Email:</strong> {{selectedQuotation.customer.email}}<br>
+                                              <strong>Teléfono:</strong> {{selectedQuotation.customer.phone}}<br>
+                                              <strong>Dirección:</strong> {{selectedQuotation.customer.address}}
+                                            </p>
+                                          </div>
+                                      
+                                          <div class="col-6 company-info">
+                                            <h5>Remitente</h5>
+                                            <p>
+                                              <strong>Nombre:</strong> {{selectedQuotation.remitter}}<br>
+                                              <strong>usuario:</strong> {{selectedQuotation.user.firstname}} {{selectedQuotation.user.lastname}}<br>
+                                              <strong>Email:</strong> {{selectedQuotation.user.email}}<br>
+                                            </p>
+                                          </div>
+  
+                                          
+                                        </div>
+                                      
+                                      
+                                        <div class="table-responsive mt-4">
+                                          <table class="table table-bordered table-invoice">
+                                            <thead class="table-dark">
+                                              <tr>
+                                                <th>Servicio</th>
+                                                <th>Descripción</th>
+                                                <th>Cantidad</th>
+                                                <th>Valor Unitario</th>
+                                                <th>Valor Total</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              @for(item of selectedQuotation.items; track item){
+                                              <tr class="mb-1">
+                                                <td>{{ item.product}}</td>
+                                                <td>{{ item.description}}</td>
+                                                <td>{{ item.quantity}}</td>
+                                                <td>{{ item.valueUnit}}</td>
+                                                <td>{{ item.valueTotal}}</td>
+                                              </tr>
+                                            }
+                                      
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      
+                                      
+                                        <div class="row">
+                                          <div class="col-6"></div>
+                                          <div class="col-6">
+                                            <table class="table table-bordered">
+                                              <tbody>
+                                                <tr>
+                                                  <td>Subtotal</td>
+                                                  <td>{{selectedQuotation.net}}</td>
+                                                </tr>
+                                                <tr>
+                                                  <td>IVA</td>
+                                                  <td>{{selectedQuotation.iva}}</td>
+                                                </tr>
+                                                <tr>
+                                                  <td>Descuento</td>
+                                                  <td>{{selectedQuotation.discount.percentage}}%</td>
+                                                </tr>
+                                                <tr class="total-row">
+                                                  <td>Total</td>
+                                                  <td>{{selectedQuotation.total}}</td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </div>
+                                        </div>
+                                      
+                                      
+                                        <div class="footer-info">
+                                          <p>
+                                            <strong>Condiciones de Pago:</strong> Pago a 30 días desde la fecha de emisión.<br>
+                                            <strong>Métodos de Pago:</strong> Transferencia bancaria, PayPal. <br>
+                                            <strong>Observaciones:</strong> Esta cotización es válida hasta la fecha indicada y está sujeta a cambios sin previo aviso.
+                                          </p>
+                                          
+                                           
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            
+                          }
+
+                            <a class="edit bg-warning" data-bs-toggle="modal" data-bs-target="#update_client" href=""><img src="../../../../assets/icons/edit.svg" alt=""></a>
+                            <div class="modal fade" id="update_client" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-3" id="staticBackdropLabel">Cliente</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal_update modal-body">
+                                    <form action="" class="d-flex ">
+                                      <div class="cont">
+                                          <label for="input" class="form-label">Cliente:</label>
+                                          <input class="form-control mb-2" type="text"  aria-label="default input example">
+                                          <label for="input" class="form-label">Rut:</label>
+                                          <input class="form-control mb-2" type="text" aria-label="default input example">
+                                          <label for="input" class="form-label">Rubro:</label>
+                                          <input class="form-control" type="text"  aria-label="default input example">
+                                      </div>
+                              
+                                      <div class="cont">
+                                          <label for="input" class="form-label">Correo:</label>
+                                          <input class="form-control mb-2" type="email"  aria-label="default input example">
+                                          <label for="input" class="form-label">Telefono:</label>
+                                          <input class="form-control mb-2" type="text" aria-label="default input example">
+                                          <label for="input" class="form-label">Direccion:</label>
+                                          <input class="form-control" type="text"  aria-label="default input example">
+                                      </div>
+                                    </form>
+                                    <div class=" cont_btn mt-3 me-3 pb-3 mt-5 d-flex ">
+                                      <button type="submit" class="btn btn-primary ">Actualizar</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+        
+        
+                            <a class="delete bg-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop" href=""(click)="openDeleteModal(quotation.quotationId)"><img src="../../../../assets/icons/delete.svg" alt=""></a>
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                  <div class="modal_delete modal-body text-center">
+                                    <img class="alert" src="../../../../assets/icons/alert.svg" alt="">
+                                    <h1 class="modal-title fs-3 mb-1" id="staticBackdropLabel">¿Estas seguro?</h1>
+                                    <h6 class="modal-title fs-8 mb-4">!No podras deshacer cambios!</h6>
+                                    <div class="mb-5">
+                                      <button type="button" class="btn btn-danger me-4" data-bs-dismiss="modal"  (click)="deleteQuotation()">Si, borrarlo!</button>
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Cancelar</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+        
+                        </div>
+                    </td>
+                </tr>
+              }
+              </tbody>
+        </table>
+
+        @if(loading){
+          <div  class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          }
+
+        <section class="pagi mt-4 d-flex">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <pagination-controls (pageChange)="page = $event" class="justify-content-center"></pagination-controls>
+                </ul>
+              </nav>
+          </section>
+
+    </section>
+</div>

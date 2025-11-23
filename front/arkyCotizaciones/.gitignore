@@ -1,0 +1,38 @@
+# Compiled output
+dist/
+dist-ssr/
+out-tsc/
+
+# Dependencies
+node_modules/
+
+# Angular cache
+.angular/
+
+# Logs
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# IDEs
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment files (por seguridad)
+src/environments/environment.ts
+src/environments/environment.prod.ts
+
+# Allow only example templates
+!src/environments/environment.example.ts
+!src/environments/environment.prod.example.ts
+
+# System files
+.DS_Store
+Thumbs.db
+
